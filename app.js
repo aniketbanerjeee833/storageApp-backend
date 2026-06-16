@@ -1,12 +1,13 @@
-import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
+import express from "express"; 
+import cors from "cors"; 
+import cookieParser from "cookie-parser"; 
 import directoryRoutes from "./routes/directoryRoutes.js";
-import fileRoutes from "./routes/fileRoutes.js";
-import subscriptionRoutes from "./routes/subscriptionRoutes.js";
+import fileRoutes from "./routes/fileRoutes.js"; 
+import subscriptionRoutes from "./routes/subscriptionRoutes.js"; 
 import userRoutes from "./routes/userRoutes.js";
 // import webhookRoutes from "./routes/webhookRoutes.js";
 // import authRoutes from "./routes/authRoutes.js";
+
 import checkAuth from "./middlewares/authMiddleware.js";
 import { connectDB } from "./config/db.js";
 
@@ -38,7 +39,7 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server Started`);
+  console.log(`Server Started correctly`);
 });
 
 // https://stackoverflow.com/questions/18367824/how-to-cancel-http-upload-from-data-events
