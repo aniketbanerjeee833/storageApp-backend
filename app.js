@@ -55,6 +55,7 @@ bashChildProcess.stderr.on('data', (data) => {
     process.stderr.write(data);
 });
 bashChildProcess.on('close', (code) => {
+  res.json({message:"OK"});
     if(code==0){
         console.log(`child process exited with code ${code}`);
       
