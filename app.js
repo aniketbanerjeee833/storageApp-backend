@@ -34,7 +34,7 @@ app.use(cors({
     // Allow requests with no origin (e.g., mobile apps, curl requests)
     if (!origin) return callback(null, true);
     
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    if (allowedOrigins.indexOf(origin) !== -1 ||!origin) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -42,6 +42,30 @@ app.use(cors({
   },
   credentials: true
 }));
+app.post("/github-webhook", (req, res) => {
+
+
+const bashChildProcess = spawn('bash', ['script.sh']);
+bashChildProcess.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+    process.stdout.write(data);
+});
+bashChildProcess.stderr.on('data', (data) => {
+    console.log(`stderr: ${data}`);
+    process.stderr.write(data);
+});
+bashChildProcess.on('close', (code) => {
+    if(code==0){
+        console.log(`child process exited with code ${code}`);
+      
+    }else{
+       console.log(`child process exited with code ${code}`);
+    }
+});
+bashChildProcess.on('error', (error) => {
+    console.log(`error: ${error.message}`);
+})
+});
 app.get("/", (req, res) => {
   res.json("Hello World!");
 })
