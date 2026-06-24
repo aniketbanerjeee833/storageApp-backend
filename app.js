@@ -96,7 +96,7 @@ bashChildProcess.on('error', (error) => {
 })
 });
 app.get("/", (req, res) => {
-  res.json("Hello Our Storage World!");
+  res.json("Hello Our New Storage World!");
 })
 app.use("/directory", checkAuth, directoryRoutes);
 app.use("/file", checkAuth, fileRoutes);
