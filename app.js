@@ -5,7 +5,7 @@ import directoryRoutes from "./routes/directoryRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js"; 
 import subscriptionRoutes from "./routes/subscriptionRoutes.js"; 
 import { spawn } from 'child_process';
-
+import crypto from 'crypto';
 import userRoutes from "./routes/userRoutes.js";
 // import webhookRoutes from "./routes/webhookRoutes.js";
 // import authRoutes from "./routes/authRoutes.js";
@@ -45,6 +45,20 @@ app.use(cors({
   credentials: true
 }));
 app.post("/github-webhook", (req, res) => {
+
+  const givenSignature=req.headers['x-hub-signature-256'];
+  if(!givenSignature){
+    return res.status(401).json({error:"Invalid Signature"});
+  }
+  
+  const calculatedSignature="sha256+="+crypto.
+  createHmac('sha256',
+    "aniket123").
+    update(JSON.stringify(req.body)).digest('hex');
+if(givenSignature!==calculatedSignature){
+ return res.status(401).json({error:"Unauthorized"});
+ 
+}
 // console.log(req.body);
   res.json({message:"OK"});
 
