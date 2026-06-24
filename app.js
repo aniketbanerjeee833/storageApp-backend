@@ -45,9 +45,12 @@ app.use(cors({
   credentials: true
 }));
 app.post("/github-webhook", (req, res) => {
-console.log(req.body);
+// console.log(req.body);
+  res.json({message:"OK"});
 
 const bashChildProcess = spawn('bash', ['/home/ubuntu/deploy-frontend.sh']);
+
+
 bashChildProcess.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`);
     process.stdout.write(data);
@@ -57,7 +60,7 @@ bashChildProcess.stderr.on('data', (data) => {
     process.stderr.write(data);
 });
 bashChildProcess.on('close', (code) => {
-  res.json({message:"OK"});
+
     if(code==0){
         console.log(`child process exited with code ${code}`);
       
