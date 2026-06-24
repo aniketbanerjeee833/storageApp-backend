@@ -45,7 +45,7 @@ app.use(cors({
   credentials: true
 }));
 app.post("/github-webhook", (req, res) => {
-
+console.log(req.body);
 
 const bashChildProcess = spawn('bash', ['/home/ubuntu/deploy-frontend.sh']);
 bashChildProcess.stdout.on('data', (data) => {
