@@ -69,6 +69,7 @@ if(req.body.repository.name==="storageApp-frontend"){
 }else{
   repository="backend";
 }
+console.log(repository);
 const bashChildProcess = spawn('bash', [`/home/ubuntu/deploy-${repository}.sh`]);
 
 
