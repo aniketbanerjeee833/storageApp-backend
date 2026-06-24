@@ -47,14 +47,16 @@ app.use(cors({
 app.post("/github-webhook", (req, res) => {
 
   const givenSignature=req.headers['x-hub-signature-256'];
-  if(!givenSignature){
+console.log(givenSignature); 
+ if(!givenSignature){
     return res.status(401).json({error:"Invalid Signature"});
   }
   
-  const calculatedSignature="sha256+="+crypto.
+  const calculatedSignature="sha256="+crypto.
   createHmac('sha256',
     "aniket123").
     update(JSON.stringify(req.body)).digest('hex');
+console.log(calculatedSignature)
 if(givenSignature!==calculatedSignature){
  return res.status(401).json({error:"Unauthorized"});
  
