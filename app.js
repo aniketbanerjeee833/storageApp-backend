@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import directoryRoutes from "./routes/directoryRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js"; 
 import subscriptionRoutes from "./routes/subscriptionRoutes.js"; 
+import { spawn } from 'child_process';
+
 import userRoutes from "./routes/userRoutes.js";
 // import webhookRoutes from "./routes/webhookRoutes.js";
 // import authRoutes from "./routes/authRoutes.js";
@@ -77,12 +79,22 @@ app.use("/subscriptions", checkAuth, subscriptionRoutes);
 app.use("/", userRoutes);
 // app.use("/auth", authRoutes);
 
-app.use((err, req, res, next) => {
-  console.log(err);
+//app.use((err, req, res, next) => {
+  //console.log(err);
   // res.status(err.status || 500).json({ error: "Something went wrong!" });
-  res.json(err);
-});
+  //res.json(err);
+//});
+app.use((err, req, res, next) => {
+  console.error(err);
 
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  return res.status(err.status || 500).json({
+    error: err.message || "Something went wrong"
+  });
+});
 app.listen(PORT, () => {
   console.log(`Server Started correctly`);
 });
