@@ -63,8 +63,13 @@ if(givenSignature!==calculatedSignature){
 }
 // console.log(req.body);
   res.json({message:"OK"});
-
-const bashChildProcess = spawn('bash', ['/home/ubuntu/deploy-frontend.sh']);
+let repository;
+if(req.body.repository.name==="storageApp-frontend"){
+  repository="frontend";
+}else{
+  repository="backend";
+}
+const bashChildProcess = spawn('bash', [`/home/ubuntu/deploy-${repository}.sh`]);
 
 
 bashChildProcess.stdout.on('data', (data) => {
